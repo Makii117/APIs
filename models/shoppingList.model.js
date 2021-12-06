@@ -1,9 +1,9 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../util/datbase");
-const User = sequelize.define(
-  "user",
+const shoppingList = sequelize.define(
+  "shoppingList",
   {
-    user_id: {
+    id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -13,8 +13,17 @@ const User = sequelize.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    quantity: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
   },
-  { timestamps: true, createdAt: "created_at", updatedAt: "updated_at" }
+  {
+    freezeTableName: true,
+    timestamps: true,
+    updatedAt: false,
+    createdAt: "time_added",
+  }
 );
 
-module.exports = User;
+module.exports = shoppingList;

@@ -3,16 +3,30 @@ const HttpError = require("./models/http-error");
 const bodyParser = require("body-parser");
 const app = express();
 
+//import routes
+const shoppingRoutes = require("./routes/shoppingList.routes");
+
+//Import sequalize object
+const sequelize = require("./util/datbase");
+
+//Import models
+const User = require("./models/user.model");
+const shoppingList = require("./models/shoppingList.model");
+const { FORCE } = require("sequelize/dist/lib/index-hints");
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //Route handlers
+app.use("/api/shoppingList", shoppingRoutes);
+
 app.get("/api", function (req, res) {
   res.send("Connected to backend");
 });
 
 app.get("/", function (req, res) {
+  sequelize.sync({ force: true });
   res.send('<h1>Hello World</h1> <a href="/api" >Click me</a>');
 });
 
